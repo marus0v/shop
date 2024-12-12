@@ -6,19 +6,7 @@ class Product
     @quantity = params[:quantity]
   end
 
-  def set_price(price)
-    @price = price
-  end
-
-  def set_quantity(quantity)
-    @quantity = quantity
-  end
-
-  def price
-    return @price
-  end
-
-  def quantity
-    return @quantity
+  def to_s
+    puts "На складе #{self.quantity} шт по #{self.price} руб"
   end
 end
