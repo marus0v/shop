@@ -7,6 +7,6 @@ class Product
   end
 
   def to_s
-    puts "На складе #{self.quantity} шт по #{self.price} руб"
+    "на складе #{self.quantity} шт по #{self.price} руб"
   end
 end

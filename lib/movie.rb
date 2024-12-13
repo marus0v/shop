@@ -8,11 +8,22 @@ class Movie < Product
     @director = params[:director]
   end
 
+  def name=(name)
+    @name = name
+  end
+
+  def year=(year)
+    @year = year
+  end
+
+  def director=(director)
+    @director = director
+  end
   def type
     return "Movie"
   end
 
   def to_s
-    puts "На складе #{self.type} #{@title}, #{@year} года, реж. #{@director}: #{@quantity} шт по #{@price} руб"
+    "#{self.type} #{@name}, #{@year} года, реж. #{@director}: #{super}"
   end
 end

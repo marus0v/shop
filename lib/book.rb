@@ -8,11 +8,22 @@ class Book < Product
     @author = params[:author]
   end
 
+  def name=(name)
+    @name = name
+  end
+
+  def genre=(genre)
+    @genre = genre
+  end
+
+  def author=(author)
+    @author = author
+  end
   def type
     return "Book"
   end
 
   def to_s
-    puts "На складе #{self.type} #{@genre} #{@name}, автор #{@author}: #{@quantity} шт по #{@price} руб"
+    "#{self.type} #{@genre} #{@name}, автор #{@author}: #{super}"
   end
 end
