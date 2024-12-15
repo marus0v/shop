@@ -7,6 +7,10 @@ class Product
   end
 
   def to_s
-    "на складе #{self.quantity} шт по #{self.price} руб"
+    "на складе #{@quantity} шт по #{@price} руб"
+  end
+
+  def self.from_file(file_path)
+    raise NotImplementedError
   end
 end
