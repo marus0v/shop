@@ -29,7 +29,7 @@ class Book < Product
     end
 
     file = File.new(file_name, 'r:UTF-8')
-    lines = file.readlines
+    lines = file.readlines.map { |l| l.chomp}
     file.close
     self.new(
       price: lines[0].to_i,

@@ -1,51 +1,42 @@
 class ProductCollection
 
-  # attr_reader :price, :quantity
+  PRODUCT_TYPES = {
+    movie: {dir: 'movie', class: Movie},
+    book: {dir: 'book', class: Book}
+  }
 
-  def initialize(dir)
-    @dir = dir
-    @coll = []
+  def initialize(products = [])
+    # @dir = dir
+    @products = products
   end
 
   def self.from_dir(dir)
-    main_dir = Dir.new(dir)
-    folder = main_dir.entries
-    # .delete('.')
-    # .delete('..')
-    folder.delete('.')
-    folder.delete('..')
-    # puts folder.to_s
-    subfolder_arr = []
-    folder.each do |subfolder|
-      subfolder_arr << dir + subfolder + "/"
+    products = []
+    PRODUCT_TYPES.each do |type, hash|
+      product_dir = hash[:dir]
+      product_class = hash[:class]
+      Dir[dir + '/' + product_dir + '/*.txt'].each do |path|
+        products << product_class.from_file(path)
+      end
     end
-    puts subfolder_arr.to_s
-    call1 = []
-    book_dir = Dir.new(subfolder_arr[0])
-    book_list = book_dir.entries
-    book_list.delete('.')
-    book_list.delete('..')
-    puts book_list
-    book_list.each do |book|
-      book_obj = Book.from_file(subfolder_arr[0] + book)
-      call1 << book_obj
-    end
-    puts call1.to_s
-    movie_dir = Dir.new(subfolder_arr[1])
-    movie_list = movie_dir.entries
-    movie_list.delete('.')
-    movie_list.delete('..')
-    puts movie_list
-    movie_list.each do |movie|
-      movie_obj = Movie.from_file(subfolder_arr[1] + movie)
-      call1 << movie_obj
-    end
-    puts call1.to_s
-    @oll = call1
+    self.new(products)
   end
 
-  def to_s
-    puts @coll
+  def to_a
+    @products
+  end
+
+  def sort!(params)
+    case params[:by]
+    when :quantity
+      @products.sort_by! { |product| product.quantity }
+    when :price
+      @products.sort_by! { |product| product.price }
+    when :name
+      @products.sort_by! { |product| product.to_s }
+    end
+    @products.reverse! if params[:order] == :asc
+    self
   end
 
 end
